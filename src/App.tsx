@@ -1,69 +1,54 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router } from 'react-router-dom';
-import NavBar from './Components/home/Navbar';
-import Home from './Components/home';
-import Auth from './Components/auth';
+import Auth from './Components/auth/auth';
+import Home from './Components/Main/main';
 
-
-type tokenState = {
-    sessionToken: string | null;
-    submits: any; 
-    comments: any;
-    userId: number;
-    role: 'user' | 'admin';
-}
-
-export default class App extends React.Component<{}, tokenState> {
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            sessionToken: '',
-            submits: {},
-            comments: {},
-            userId: 0,
-            role: 'user',
-        }
+export default class App extends React.Component {
+    state = {
+      sessionToken: ""
+    } 
+  
+  componentWillMount() {
+    if(localStorage.getItem('token')){
+      this.setState({
+        sessionToken: localStorage.getItem('token')
+      })
     }
+  }
+  
+  updateToken(newToken: string){
+    localStorage.setItem('token', newToken);
+    this.setState({
+      sessionToken: newToken
+    });
+  }
 
-    componentWillMount() {
-        if(localStorage.getItem('token')) {
-            this.setState({
-                sessionToken: localStorage.getItem('token')
-            });
-        }
-    };
-        
-    updateToken(newToken: string) {
-        localStorage.setItem('token', newToken);
-        this.setState({
-            sessionToken: newToken
-        });
-    }
+  clearToken(){
+    localStorage.clear();
+    this.setState({
+      sessionToken: ""
+    })
+  }
+    
+      protectedViews = () => {
+        return(
+            this.state.sessionToken === localStorage.getItem('token') ? 
+        <div>
+            <Router>
+              <Home clickLogout={this.clearToken.bind(this)} token={this.state.sessionToken}/>
+            </Router>
+        </div>
+        : <Auth updateToken={this.updateToken.bind(this)} />
+        );
+      }
 
-    clearToken() {
-        localStorage.clear();
-        this.setState({
-            sessionToken: ''
-        })
-    }
-    logout = () => {
-        localStorage.clear();
-        this.setState({
-            sessionToken: ''
-        })
-    }
-
-    render() {
-        <Router>
-            <Home clickLogout={this.clearToken.bind(this)} token={this.state.sessionToken} />
-        </Router>
-        const protectedViews = !this.state.sessionToken ? <Auth setToken={this.updateToken}/> : <Home logout={this.logout}/>
+      render(){
         return (
-            <div>
-                <NavBar />
-                {protectedViews}
-            </div>
+          <div>
+            {this.protectedViews()}
+          </div>
         );
     }
 }
+    
