@@ -2,7 +2,10 @@ import React from 'react';
 import { 
     Button,
     TextField,
-    Typography,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
 } from '@material-ui/core';
 
 type Props = {
@@ -14,6 +17,7 @@ type RegisterState = {
     email: string;
     password: string;
     role: boolean;
+    handleopen: boolean;
 }
 
 class SignUp extends React.Component<Props, RegisterState> {
@@ -24,6 +28,7 @@ class SignUp extends React.Component<Props, RegisterState> {
             email: '',
             password: '',
             role: false,
+            handleopen: false,
         }
     }
 
@@ -46,9 +51,23 @@ class SignUp extends React.Component<Props, RegisterState> {
            .then(res => res.json())
            .then(data => {
                console.log(data);
+               this.props.updateToken(data.sessionToken);
+               this.handleClose();
            })
        }
    }
+
+   handleOpen = () => {
+    this.setState({
+      handleopen: true,
+    });
+  };
+
+  handleClose = () => {
+    this.setState({
+      handleopen: false,
+    });
+  };
 
    setUsername(event: string) {
        this.setState({
@@ -71,12 +90,15 @@ class SignUp extends React.Component<Props, RegisterState> {
    render() {
     return (
         <div>
-            <form onSubmit={(event) => this.handleSubmit(event)}>
-                <Typography variant="h5" component="h5">
-                    Sign Up
-                </Typography>
+            <Button onClick={this.handleOpen} id="RegisterButton">
+                <strong>SIGN UP</strong>
+            </Button>
+            <Dialog open={this.state.handleopen} onClose={this.handleClose}>
+            <DialogTitle id="dialogTitle">
+                <strong>SIGN UP</strong>
+            </DialogTitle>
+            <DialogContent id="Register">
                 <TextField
-                    autoFocus
                     margin="dense"
                     label="Username"
                     type="text"
@@ -84,7 +106,6 @@ class SignUp extends React.Component<Props, RegisterState> {
                     onChange={(e) => this.setUsername(e.target.value)}
                     />
                     <TextField
-                    autoFocus
                     margin="dense"
                     label="Email"
                     type="text"
@@ -92,17 +113,19 @@ class SignUp extends React.Component<Props, RegisterState> {
                     onChange={(e) => this.setEmail(e.target.value)}
                     />
                     <TextField
-                    autoFocus
                     margin="dense"
                     label="Password"
                     type="password"
                     fullWidth
                     onChange={(e) => this.setPassword(e.target.value)}
                     />
-                    <Button type="submit" color="primary">
-                        Sign Up
-                    </Button>
-            </form>
+            </DialogContent>
+            <DialogActions id="Registerbtn">
+                <Button onClick={this.handleSubmit} id="btn">
+                    <strong>SIGN UP</strong>
+                </Button>
+            </DialogActions>
+            </Dialog>
         </div>
       )
    }

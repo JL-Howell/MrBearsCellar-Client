@@ -2,7 +2,10 @@ import React from 'react';
 import { 
     Button,
     TextField,
-    Typography,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
 } from '@material-ui/core';
 
 type Props = {
@@ -12,20 +15,18 @@ type Props = {
 type SigninState = {
     username: string,
     password: string,
-    inCorrectPassword: boolean,
-    noUsername: boolean,
+    handleopen: boolean,
 }
 
 export default class Login extends React.Component<Props, SigninState>{
-    constructor(props: any) {
+    constructor(props: Props) {
         super(props);
         this.state = {
             username: '',
             password: '',
-            inCorrectPassword: false,
-            noUsername: false,
+            handleopen: false,
         }
-    }
+    };
 
     handleSubmit = (event: any) => {
         event.preventDefault();
@@ -35,25 +36,29 @@ export default class Login extends React.Component<Props, SigninState>{
                 username: this.state.username,
                 password: this.state.password,
             }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data)
-                if (data.error === 'incorrect password') {
-                    alert('incorrect password!')
-                    this.setState({
-                        inCorrectPassword: true,
-                    })
-                }
-                if (data.error === 'no username') {
-                    alert('username does not exist...try again!')
-                }
-                this.props.updateToken(data.sessionToken);
-            })
-    }
+            headers: new Headers({
+                "Content-Type": "application/json"
+           })
+       })
+       .then(res => res.json())
+       .then(data => {
+           console.log(data);
+           this.props.updateToken(data.sessionToken);
+           this.handleClose();
+       })
+   };
+
+   handleOpen = () => {
+    this.setState({
+      handleopen: true,
+    });
+  };
+
+  handleClose = () => {
+    this.setState({
+      handleopen: false,
+    });
+  };
 
     setUsername(event: string) {
         this.setState({
@@ -69,31 +74,38 @@ export default class Login extends React.Component<Props, SigninState>{
 
     render() {
         return (
-            <div>
-                <form onSubmit={(event) => this.handleSubmit(event)}>
-                    <Typography variant="h5" component="h5">
-                        Login
-                    </Typography>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        label="Username"
-                        type="text"
-                        fullWidth
-                        onChange={(e) => this.setUsername(e.target.value)}
-                        />
-                        <TextField
-                        autoFocus
-                        margin="dense"
-                        label="Password"
-                        type="password"
-                        fullWidth
-                        onChange={(e) => this.setPassword(e.target.value)}
-                        />
-                        <Button type="submit" color="primary">
-                            Login
-                        </Button>
-                </form>
+            <div className="Container">
+                <Button onClick={this.handleOpen} id="LoginButton">
+                    <strong>LOGIN</strong>
+                </Button>
+                <Dialog open={this.state.handleopen} onClose={this.handleClose}>
+                <DialogTitle id="dialogTitle">
+                    <strong>LOGIN</strong>
+                </DialogTitle>
+                <DialogContent id="Login">
+                <TextField
+                    autoFocus
+                    margin="dense"
+                    label="Username"
+                    type="text"
+                    fullWidth
+                    onChange={(e) => this.setUsername(e.target.value)}
+                />
+                <TextField
+                    autoFocus
+                    margin="dense"
+                    label="Password"
+                    type="password"
+                    fullWidth
+                    onChange={(e) => this.setPassword(e.target.value)}
+                />
+                </DialogContent>
+                <DialogActions id="Loginbtn">
+                    <Button onClick={this.handleSubmit} id="btn">
+                        <strong>LOGIN</strong>
+                    </Button>
+                </DialogActions>
+                </Dialog>
             </div>
         )
     }
