@@ -1,69 +1,143 @@
 import React from 'react';
-import {Typography, Toolbar} from '@material-ui/core';
+import {
+    Button,
+    TextField,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+} from '@material-ui/core';
+import './Style.css';
 
-type Props = {
-    subCreate: string,
-    fetchPost: () => void,
+interface Props {
     token: string,
-    off: () => void,
 }
 
 type State = {
-    submission: string,
-    file: string,
+    title: string;
+    date: string;
+    entry: string;
+    file: string;
+    handleopen: boolean;
 }
 
 export default class SubmissionCreate extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props)
         this.state = {
-            submission: "",
+            title: "",
+            date: "",
+            entry: "",
             file: "",
+            handleopen: false,
         }
     }
 
-    handleSubmit = (event: any) => {
-        event.preventDefault(); 
+    handleSubmit = (event: React.SyntheticEvent) => {
+        event.preventDefault();
         const subData = new FormData();
         subData.append('image', this.state.file)
-        subData.append('submission', this.state.submission)
-        if(this.state.submission) {
-            fetch('http://localhost:4000/submission/create', {
-                method: 'POST',
-                body: subData,
-                headers: new Headers({
-                    'Authorization': this.props.token
-                })
+        subData.append('title', this.state.title)
+        subData.append('date', this.state.date)
+        subData.append('entry', this.state.entry)
+        fetch('http://localhost:4000/submission/create', {
+            method: 'POST',
+            body: subData,
+            headers: new Headers({
+                // 'Content-Type': 'application/json',
+                'Authorization': this.props.token
             })
-            .then((res) => res.json())
-            .then(() => {
+        })
+            .then(res => res.json())
+            .then(data => {
                 this.setState({
-                    submission: ''
+                    title: '',
+                    date: '',
+                    entry: '',
                 })
-                this.props.fetchPost();
-                this.props.off();
+                console.log(data)
+                this.handleClose();
             })
-        }
+    };
+
+    handleOpen = () => {
+        this.setState({
+            handleopen: true,
+        });
+    };
+
+    handleClose = () => {
+        this.setState({
+            handleopen: false,
+        });
+    };
+
+    setTitle(event: string) {
+        this.setState({
+            title: (event)
+        })
     }
 
-    imgChangeHandler = (event: any) => {
+    setDate(event: string) {
+        this.setState({
+            date: (event)
+        })
+    }
+
+    setEntry(event: string) {
+        this.setState({
+            entry: (event)
+        })
+    }
+
+    singleFileChangedHandler = (event: any) => {
         this.setState({
             file: event.target.files[0]
         });
     }
 
-    closeSubmission = () => {
-        this.props.off();
-    }
-
-    render () {
+    render() {
         return (
-            <div>
-                <Toolbar>
-                    <Typography className="root" variant="h5" noWrap>
-                        Submissions
-                    </Typography>
-                </Toolbar>
+            <div className="container">
+                <Button onClick={this.handleOpen} id="CreateButton" variant="outlined">Create a Creepy Submission</Button>
+                <Dialog open={this.state.handleopen} onClose={this.handleClose}>
+                    <DialogTitle id="CreatePopup">
+                        Create Post
+                </DialogTitle>
+                    <DialogContent id="Create">
+                        <TextField
+                            margin="dense"
+                            label="Title"
+                            type="text"
+                            fullWidth
+                            onChange={(e) => this.setTitle(e.target.value)}
+                        />
+                        <TextField
+                            margin="dense"
+                            label="Date"
+                            type="text"
+                            fullWidth
+                            onChange={(e) => this.setDate(e.target.value)}
+                        />
+                        <TextField
+                            margin="dense"
+                            label="Entry"
+                            type="text"
+                            fullWidth
+                            onChange={(e) => this.setEntry(e.target.value)}
+                        />
+                        <input
+                            accept="image/*"
+                            className="inputImage"
+                            id="contained-button-file"
+                            type="file"
+                            onChange={this.singleFileChangedHandler}
+                        />
+                    </DialogContent>
+                    <DialogActions id="Createbtn">
+                        <Button onClick={this.handleSubmit} id="btn">Submit</Button>
+                    </DialogActions>
+                </Dialog>
             </div>
         )
     }

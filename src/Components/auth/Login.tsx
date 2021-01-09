@@ -7,6 +7,7 @@ import {
     DialogContent,
     DialogTitle,
 } from '@material-ui/core';
+import './auth.css';
 
 type Props = {
     updateToken: (newToken: string) => void,
@@ -43,7 +44,7 @@ export default class Login extends React.Component<Props, SigninState>{
        .then(res => res.json())
        .then(data => {
            console.log(data);
-           this.props.updateToken(data.sessionToken);
+           this.props.updateToken(data.token);
            this.handleClose();
        })
    };
@@ -74,13 +75,13 @@ export default class Login extends React.Component<Props, SigninState>{
 
     render() {
         return (
-            <div className="Container">
-                <Button onClick={this.handleOpen} id="LoginButton">
-                    <strong>LOGIN</strong>
+            <div>
+                <Button onClick={this.handleOpen} id="LoginButton" variant="outlined">
+                    LOGIN
                 </Button>
                 <Dialog open={this.state.handleopen} onClose={this.handleClose}>
                 <DialogTitle id="dialogTitle">
-                    <strong>LOGIN</strong>
+                   LOGIN
                 </DialogTitle>
                 <DialogContent id="Login">
                 <TextField
@@ -101,9 +102,7 @@ export default class Login extends React.Component<Props, SigninState>{
                 />
                 </DialogContent>
                 <DialogActions id="Loginbtn">
-                    <Button onClick={this.handleSubmit} id="btn">
-                        <strong>LOGIN</strong>
-                    </Button>
+                    <Button onClick={this.handleSubmit} id="btn">LOGIN</Button>
                 </DialogActions>
                 </Dialog>
             </div>

@@ -7,6 +7,7 @@ import {
     DialogContent,
     DialogTitle,
 } from '@material-ui/core';
+import './auth.css';
 
 type Props = {
     updateToken: (newToken: string) => void,
@@ -89,13 +90,11 @@ class SignUp extends React.Component<Props, RegisterState> {
 
    render() {
     return (
-        <div>
-            <Button onClick={this.handleOpen} id="RegisterButton">
-                <strong>SIGN UP</strong>
-            </Button>
+        <div className="container">
+            <Button onClick={this.handleOpen} id="RegisterButton" variant="outlined">SIGN UP</Button>
             <Dialog open={this.state.handleopen} onClose={this.handleClose}>
-            <DialogTitle id="dialogTitle">
-                <strong>SIGN UP</strong>
+            <DialogTitle id="RegisterPopup">
+                REGISTER
             </DialogTitle>
             <DialogContent id="Register">
                 <TextField
@@ -121,9 +120,7 @@ class SignUp extends React.Component<Props, RegisterState> {
                     />
             </DialogContent>
             <DialogActions id="Registerbtn">
-                <Button onClick={this.handleSubmit} id="btn">
-                    <strong>SIGN UP</strong>
-                </Button>
+                <Button onClick={this.handleSubmit} id="btn">SIGN UP</Button>
             </DialogActions>
             </Dialog>
         </div>
