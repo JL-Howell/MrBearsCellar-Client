@@ -1,26 +1,44 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Home from './Components/Home/Home';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+export default class App extends React.Component {
+    state = {
+      token: ""
+    } 
+    
+  componentDidlMount() {
+    if(localStorage.getItem('token')){
+      this.setState({
+        token: localStorage.getItem('token')
+      })
+    }
+  }
+  
+  updateToken(newToken: string){
+    localStorage.setItem('token', newToken);
+    this.setState({
+      token: newToken
+    });
+  }
+
+  clearToken(){
+    localStorage.clear();
+    this.setState({
+      token: ""
+    })
+  }
+  
+  render(){
+    return (
+      <div>
+        <header className="app-header">
+          <Router>
+            <Home clearToken={this.clearToken.bind(this)} updateToken={this.updateToken.bind(this)} token={this.state.token} />
+          </Router>
+        </header>
     </div>
-  );
+    );
+  }
 }
-
-export default App;

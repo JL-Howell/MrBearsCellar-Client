@@ -1,0 +1,21 @@
+body {
+    background-color: rgb(28, 28, 32);
+}
+
+#logo {
+    display: block;
+    margin: 0 auto;
+    width: 100vh;
+}
+
+#appBar {
+    background: rgb(78, 2, 2);
+}
+
+#CellarText {
+    text-align: center;
+    font-family: 'Butcherman', cursive;
+    color: black;
+    -webkit-text-stroke-width: 3px;
+    -webkit-text-stroke-color: rgb(121, 7, 7);
+}
