@@ -11,6 +11,8 @@ import './Style.css';
 
 interface Props {
     token: string,
+    postCreate: any,
+    fetchPosts: () => void,
 }
 
 type State = {
@@ -49,13 +51,13 @@ export default class SubmissionCreate extends React.Component<Props, State> {
             })
         })
             .then(res => res.json())
-            .then(data => {
+            .then(() => {
                 this.setState({
                     title: '',
                     date: '',
                     entry: '',
                 })
-                console.log(data)
+                this.props.fetchPosts();
                 this.handleClose();
             })
     };
