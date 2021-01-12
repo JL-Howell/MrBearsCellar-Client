@@ -11,8 +11,8 @@ import './Style.css';
 
 interface Props {
     token: string,
-    postCreate: any,
-    fetchPosts: () => void,
+    submissionCreate: any,
+    fetchSubs: () => void,
 }
 
 type State = {
@@ -44,20 +44,20 @@ export default class SubmissionCreate extends React.Component<Props, State> {
         subData.append('entry', this.state.entry)
         fetch('http://localhost:4000/submission/create', {
             method: 'POST',
-            body: subData,
+            body: subData, 
             headers: new Headers({
                 // 'Content-Type': 'application/json',
                 'Authorization': this.props.token
             })
         })
             .then(res => res.json())
-            .then(() => {
+            .then((subData) => {
                 this.setState({
                     title: '',
                     date: '',
                     entry: '',
                 })
-                this.props.fetchPosts();
+                this.props.fetchSubs();
                 this.handleClose();
             })
     };

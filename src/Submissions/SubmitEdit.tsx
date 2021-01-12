@@ -6,77 +6,59 @@ import {
     DialogContent,
     DialogTitle,
     TextField,
-    
 } from '@material-ui/core';
+import ClearIcon from '@material-ui/icons/Clear';
+import IconButton from '@material-ui/core/IconButton/IconButton';
 
 type Props = {
-    fetchPosts: () => void,
+    fetchSubs: () => void,
     updateOff: () => void,
     token: string,
-    submitEdit: {
-        id: number;
-        title: string,
-        date: string;
-        entry: string;
-        file: string;
-        createdAt: string;
-        updatedAt: string;
-        userId: number;
-    }
-    handleOpen: boolean;
+    submissionUpdated: any,
 }
 
 type State = {
     title: string;
     date: string;
     entry: string;
-    file: string;
-   
+    id: number,
+    handleopen: boolean,
+    
 }
 
 export default class SubmissionEdit extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            title: this.props.submitEdit.title,
-            date: new Date(this.props.submitEdit.date).toLocaleDateString(),
-            entry: this.props.submitEdit.entry,
-            file: this.props.submitEdit.file,
-
+            title: this.props.submissionUpdated.title,
+            date: this.props.submissionUpdated.date,
+            entry: this.props.submissionUpdated.entry,
+            id: this.props.submissionUpdated.id,
+            handleopen: false,
+           
         }
     }
 
-    editSubmission = (event: React.SyntheticEvent) => {
-        event.preventDefault();
-        const editSubData = new FormData()
-        editSubData.append('image', this.state.file)
-        editSubData.append('title', this.state.title)
-        editSubData.append('date', this.state.date)
-        editSubData.append('entry', this.state.entry)
-        fetch('http://localhost:4000/submission/update/:id,', {
+    editSubmission = () => {
+        fetch(`http://localhost:4000/submission/update/${this.props.submissionUpdated.id}`, {
             method: 'PUT',
-            body: editSubData,
+            body: JSON.stringify({title: this.state.title, date: this.state.date, entry: this.state.entry, id: this.state.id}),
             headers: new Headers({
                 'Authorization': this.props.token
             })
         })
             .then(res => res.json())
-            .then(() => {
-                this.setState({
-                    title: '',
-                    date: '',
-                    entry: '',
-                })
-                this.props.fetchPosts();
+            .then((updatedSubs) => {
+                console.log(updatedSubs)
+                this.props.fetchSubs();
                 this.props.updateOff();
             })
     }
 
-    editFile(event: string) {
-        this.setState({
-            file: (event)
-        });
+    componentDidMount () {
+        console.log('SubmissionIndex', this.props.submissionUpdated)
     }
+
 
     editTitle(event: string) {
         this.setState({
@@ -92,13 +74,7 @@ export default class SubmissionEdit extends React.Component<Props, State> {
 
     editEntry(event: string) {
         this.setState({
-            entry: (event)
-        });
-    }
-
-    singleFileChangeHandler = (event: any) => {
-        this.setState({
-            file: event.target.files[0]
+            entry: event,
         });
     }
 
@@ -106,43 +82,51 @@ export default class SubmissionEdit extends React.Component<Props, State> {
         this.props.updateOff();
     }
 
+    handleOpen = () => {
+        this.setState({
+            handleopen: true,
+        });
+    }
+
+    handleClose = () => {
+        this.setState({
+            handleopen: false,
+        })
+    }
+    
     render() {
-        return (
+        return (    
             <div className="editContainer">
-                <Dialog open={this.props.handleOpen} onClose={this.closeUpdate}>
-                    <DialogTitle id="dialogTitle">Update Submission</DialogTitle>
-                    <DialogContent id="Edit">
+                <Dialog open={true} onClose={this.closeUpdate}>
+                    <DialogTitle id="dialogTitle">Update Submission<IconButton className="exit-btn-post-edit" onClick={this.closeUpdate}><ClearIcon /></IconButton></DialogTitle>
+                    <DialogContent id="Edit" >
                         <TextField
                             margin="dense"
-                            label="Title"
+                            label="edit title"
                             type="text"
                             fullWidth
-                            onChange={(e) => this.editTitle(e.target.value)}
-                        />
-                        <TextField
-                            margin="dense"
-                            label="Date"
-                            type="text"
-                            fullWidth
-                            onChange={(e) => this.editDate(e.target.value)}
+                            value={this.state.title}
+                            onChange={(event) => this.editTitle(event.target.value)}
                         />
                         <TextField
                             margin="dense"
-                            label="Entry"
+                            label="edit date"
                             type="text"
                             fullWidth
-                            onChange={(e) => this.editEntry(e.target.value)}
+                            value={this.state.date}
+                            onChange={(event) => this.editDate(event.target.value)}
                         />
-                        <input
-                            accept="image/*"
-                            className="inputImage"
-                            id="contained-button-file"
-                            type="file"
-                            onChange={this.singleFileChangeHandler}
+                        <TextField
+                            margin="dense"
+                            label="edit entry"
+                            type="text"
+                            fullWidth
+                            value={this.state.entry}
+                            onChange={(event) => this.editEntry(event.target.value)}
                         />
+                        <Button type="submit" id="btn" onClick={this.editSubmission}>Update Submission</Button>
                     </DialogContent>
                     <DialogActions id="Createbtn">
-                        <Button onClick={this.editSubmission} id="btn">Submit</Button>
                     </DialogActions>
                 </Dialog>
             </div>

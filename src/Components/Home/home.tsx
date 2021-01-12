@@ -1,10 +1,13 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import './Home.css';
 
 import AppBar from './AppBar';
+import SideDrawer from './SideDrawer';
+import SubmitIndex from '../../Submissions/SubmitIndex';
+import SubmitPost from '../../Submissions/SubmitPost';
 
 
 interface Props {
@@ -23,6 +26,8 @@ type State = {
         userId: number;
     }>,
     handleopen: boolean,
+    submissionCreate: any,
+    fetchSubs: any,
 }
 
 export default class SubmissionIndex extends React.Component<Props, State> {
@@ -31,6 +36,8 @@ export default class SubmissionIndex extends React.Component<Props, State> {
         this.state = {
             allSubs: [],
             handleopen: false,
+            submissionCreate: {},
+            fetchSubs: '',
         }
     }
     
@@ -65,11 +72,12 @@ export default class SubmissionIndex extends React.Component<Props, State> {
 
     render() {
         return (
-            <React.Fragment>
+            <div className="Home">
                 <Router>
-                    <div className="container">
-                        <AppBar clickLogout={this.props.clearToken} updateToken={this.props.updateToken} token={this.props.token}/>
-                    </div>
+                    <header className="container">
+                        <SideDrawer clickLogout={this.props.clearToken} updateToken={this.props.updateToken} token={this.props.token}/>
+                        {/* <SubmitIndex token={this.props.token} /> */}
+                    </header>
                 </Router>
                 <Box component="span" display="block" p={1} m={1} bgcolor="background.paper">
                     {this.state.allSubs.map(allSubs => {
@@ -84,7 +92,9 @@ export default class SubmissionIndex extends React.Component<Props, State> {
                         )
                     })};
                 </Box>
-            </React.Fragment>       
+            
+            </div>
+               
         )
     }
 }

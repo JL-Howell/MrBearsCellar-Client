@@ -20,4 +20,11 @@ body {
     -webkit-text-stroke-color: rgb(121, 7, 7);
 }
 
-
+#LogoutBtn {
+    font-family: 'Butcherman', cursive;
+    font-size: 25px;
+    border-Radius: 3;
+    border: 1px solid white;
+    color: white;
+    padding: 0 28px;
+}

@@ -1,100 +1,120 @@
-import React from "react";
-// import { BrowserRouter as Router } from 'react-router-dom';
-// import SubmitPost from './SubmitPost';
-// import SubmitEdit from './SubmitEdit';
-// import Button from '@material-ui/core/Button';
-// import Dialog from '@material-ui/core/Dialog';
-// import DialogActions from '@material-ui/core/DialogActions';
-// import DialogContent from '@material-ui/core/DialogContent';
-// import DialogContentText from '@material-ui/core/DialogContentText';
-// import DialogTitle from '@material-ui/core/DialogTitle';
-// import IconButton from '@material-ui/core/IconButton';
-// import AddCircleIcon from '@material-ui/icons/AddCircle';
-// import Typography from '@material-ui/core/Typography';
-// import Grid from '@material-ui/core/Grid'
-// import Box from '@material-ui/core/Box';
-// import CardActionArea from '@material-ui/core/CardActionArea';
-// import CardMedia from '@material-ui/core/CardMedia';
+import React from 'react';
+import SubmitPost from './SubmitPost';
+import SubmitEdit from './SubmitEdit';
+import SubmitTable from './SubmitTable';
+import Grid from '@material-ui/core/Grid';
+import './Style.css';
 
-// type Props = {
-//     updateToken: (newToken: string) => void,
-//     clearToken: () => void,
-//     token: string,
-// }
+type Props = {
+    token: string;
+}
 
-// type State = {
-//     allSubs: Array<{
-//         id: number;
-//         title: string;
-//         date: string;
-//         entry: string;
-//         imageUrl: string;
-//         userId: number;
-//     }>,
-//     handleopen: boolean,
-// }
+type State = {
+    mySubs: Array<{
+        id: number;
+        title: string;
+        date: string;
+        entry: string;
+        imageUrl: string;
+        userId: number;
+    }>,
+    submissionUpdated: any,
+    submissionCreate: any,
+    updateActive: boolean,
+    submitActive: boolean,
+    handleOpen: boolean,
+}
 
-// export default class SubmissionIndex extends React.Component<Props, State> {
-//     constructor(props: Props) {
-//         super(props);
-//         this.state = {
-//             allSubs: [],
-//             handleopen: false,
-//         }
-//     }
-    
-//     fetchSubmissions = () => {
-//         fetch('http://localhost:4000/submission/', {
-//             method: 'GET',
-//         })
-//             .then(res => res.json())
-//             .then(data => {
-//                 this.setState({
-//                     allSubs: data
-//                 })
-//                 console.log("response", data);
-//             })
-//     }
+export default class SubmitIndex extends React.Component<Props, State> {
+    constructor(props: Props) {
+        super(props);
+        this.state = {
+            mySubs: [],
+            submissionUpdated: {},
+            submissionCreate: {},
+            updateActive: false,
+            submitActive: false,
+            handleOpen: false,
+        }
+    }
 
-//     componentDidMount() {
-//         this.fetchSubmissions();
-//     }
+    fetchSubs = () => {
+        console.log(this.props.token);
+        fetch('http://localhost:4000/submission/all', {
+            method: 'GET',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': `${localStorage.getItem("token")}`
 
-//     handleOpen = () => {
-//         this.setState({
-//             handleopen: true,
-//         });
-//     };
+            })
+        })
+            .then((res) => res.json())
+            .then((subData) => {
+                this.setState({
+                    mySubs: subData.submissions
+                })
+                console.log("Submissions", this.state.mySubs)
+            })
+    }
 
-//     handleClose = () => {
-//         this.setState({
-//             handleopen: false,
-//         });
-//     };
+    componentDidMount() {
+        this.fetchSubs()
+    }
 
-//     render() {
-//         return (
-//             <div>
-//                 <Box component="span" display="block" p={1} m={1} bgcolor="background.paper">
-//                     <Router>
-//                         <SubmitPost token={this.props.token} />
-                   
-//                     </Router>
-//                     {this.state.allSubs.map(allSubs => {
-//                         return (
-//                             <div key={allSubs.id}>
-//                                 <Typography variant="h6" id="reviewTitle"><strong>{allSubs.title}</strong></Typography>
-//                                 <Typography id="entryText">{allSubs.entry}</Typography>
-//                                 <Typography id="entryDate">{allSubs.date}</Typography>
-//                                 <img src={allSubs.imageUrl} width="50%" height="50%"/>
-//                                 <hr />
+    editUpdateSubmits = (submissions: any) => {
+        this.setState({
+            submissionUpdated: submissions
+        })
+    }
 
-//                             </div>
-//                         )
-//                     })};
-//                 </Box>
-//             </div>
-            
-//         )
-//     }
-// }
+    editCreateMyPosts = (submissions: any) => {
+        this.setState({
+            submissionCreate: submissions
+        })
+    }
+
+    updateOn = () => {
+        this.setState({
+            updateActive: true
+        })
+    }
+
+    updateOff = () => {
+        this.setState({
+            updateActive: false
+        })
+    }
+
+    render() {
+        return (
+            <div className="Container">
+                <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                            <SubmitPost
+                                submissionCreate={this.state.submissionCreate}
+                                fetchSubs={this.fetchSubs.bind(this)}
+                                token={this.props.token}
+                            /> : <> </>
+                            <SubmitTable
+                                mySubs={this.state.mySubs}
+                                editUpdateSubmits={this.editUpdateSubmits.bind(this)}
+                                updateOn={this.updateOn.bind(this)}
+                                fetchSubs={this.fetchSubs.bind(this)}
+                                token={this.props.token}
+                        />
+                        {this.state.updateActive ?
+                            <SubmitEdit
+                                submissionUpdated={this.state.submissionUpdated}
+                                updateOff={this.updateOff.bind(this)}
+                                token={this.props.token}
+                                fetchSubs={this.fetchSubs.bind(this)}
+                            />
+                            : <></>}
+                    </Grid>
+                </Grid>
+            </div>
+
+
+        )
+    }
+}
