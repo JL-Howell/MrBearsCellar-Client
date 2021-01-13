@@ -1,18 +1,17 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+import { BrowserRouter as Router} from 'react-router-dom';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Button from '@material-ui/core/Button';
+import AppBar from './AppBar';
+import SubmitIndex from '../../Submissions/SubmitIndex';
+import CommentIndex from '../../Comments/CommentIndex';
 import './Home.css';
 
-import AppBar from './AppBar';
-import SideDrawer from './SideDrawer';
-import SubmitIndex from '../../Submissions/SubmitIndex';
-import SubmitPost from '../../Submissions/SubmitPost';
-
-
 interface Props {
-    updateToken:(newToken: string) =>void,
-    clearToken:() => void,
+    updateToken: (newToken: string) => void,
+    clearToken: () => void,
     token: string,
 }
 
@@ -40,7 +39,7 @@ export default class SubmissionIndex extends React.Component<Props, State> {
             fetchSubs: '',
         }
     }
-    
+
     fetchSubmissions = () => {
         fetch('http://localhost:4000/submission/', {
             method: 'GET',
@@ -74,27 +73,32 @@ export default class SubmissionIndex extends React.Component<Props, State> {
         return (
             <div className="Home">
                 <Router>
-                    <header className="container">
-                        <SideDrawer clickLogout={this.props.clearToken} updateToken={this.props.updateToken} token={this.props.token}/>
-                        {/* <SubmitIndex token={this.props.token} /> */}
+                    <header className={"container"}>
+                        <AppBar clickLogout={this.props.clearToken} updateToken={this.props.updateToken} token={this.props.token} />
+                        <CommentIndex token={this.props.token} />
+                        <SubmitIndex token={this.props.token} />
                     </header>
                 </Router>
-                <Box component="span" display="block" p={1} m={1} bgcolor="background.paper">
-                    {this.state.allSubs.map(allSubs => {
-                        return (
-                            <div key={allSubs.id}>
-                                <Typography variant="h6" id="reviewTitle"><strong>{allSubs.title}</strong></Typography>
-                                <Typography id="entryText">{allSubs.entry}</Typography>
-                                <Typography id="entryDate">{allSubs.date}</Typography>
-                                <img src={allSubs.imageUrl} width="50%" height="50%"/>
-                                <hr />
-                            </div>
-                        )
-                    })};
-                </Box>
-            
+                <div className="CardCenter">
+                    {/* <CardContent> */}
+                        {this.state.allSubs.map(allSubs => {
+                            return (
+                                <Card key={allSubs.id} id="CardTable">
+                                    <CardContent><img src={allSubs.imageUrl} width="50%" height="50%"/> </CardContent>
+                                    <CardContent ><strong>{allSubs.title}</strong></CardContent>
+                                    <CardContent >{allSubs.entry}</CardContent>
+                                    <CardContent >{allSubs.date}</CardContent>
+                                    <CardActions>
+                                    <Button onClick={this.handleOpen} id="CreateBtn" variant="outlined" >Comment</Button>
+                                    </CardActions>   
+                                    <hr />
+                                </Card>
+                            )
+                        })};
+                    {/* </CardContent> */}
+                </div>
             </div>
-               
+
         )
     }
 }

@@ -10,19 +10,9 @@ type Props = {
 }
 
 type State = {
-    mySubs: Array<{
-        id: number;
-        title: string;
-        date: string;
-        entry: string;
-        imageUrl: string;
-        userId: number;
-    }>,
-    submissionUpdated: any,
-    submissionCreate: any,
+    mySubs: any,
+    submissionUpdate: any,
     updateActive: boolean,
-    submitActive: boolean,
-    handleOpen: boolean,
 }
 
 export default class SubmitIndex extends React.Component<Props, State> {
@@ -30,11 +20,8 @@ export default class SubmitIndex extends React.Component<Props, State> {
         super(props);
         this.state = {
             mySubs: [],
-            submissionUpdated: {},
-            submissionCreate: {},
+            submissionUpdate: {},
             updateActive: false,
-            submitActive: false,
-            handleOpen: false,
         }
     }
 
@@ -61,15 +48,9 @@ export default class SubmitIndex extends React.Component<Props, State> {
         this.fetchSubs()
     }
 
-    editUpdateSubmits = (submissions: any) => {
+    editUpdateSubmits = (submission: any) => {
         this.setState({
-            submissionUpdated: submissions
-        })
-    }
-
-    editCreateMyPosts = (submissions: any) => {
-        this.setState({
-            submissionCreate: submissions
+            submissionUpdate: submission
         })
     }
 
@@ -91,7 +72,6 @@ export default class SubmitIndex extends React.Component<Props, State> {
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
                             <SubmitPost
-                                submissionCreate={this.state.submissionCreate}
                                 fetchSubs={this.fetchSubs.bind(this)}
                                 token={this.props.token}
                             /> : <> </>
@@ -104,7 +84,7 @@ export default class SubmitIndex extends React.Component<Props, State> {
                         />
                         {this.state.updateActive ?
                             <SubmitEdit
-                                submissionUpdated={this.state.submissionUpdated}
+                                submissionUpdate={this.state.submissionUpdate}
                                 updateOff={this.updateOff.bind(this)}
                                 token={this.props.token}
                                 fetchSubs={this.fetchSubs.bind(this)}

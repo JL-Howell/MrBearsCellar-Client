@@ -11,7 +11,6 @@ import './Style.css';
 
 interface Props {
     token: string,
-    submissionCreate: any,
     fetchSubs: () => void,
 }
 
@@ -101,11 +100,15 @@ export default class SubmissionCreate extends React.Component<Props, State> {
     render() {
         return (
             <div className="container">
-                <Button onClick={this.handleOpen} id="CreateButton" variant="outlined">Create a Creepy Submission</Button>
-                <Dialog open={this.state.handleopen} onClose={this.handleClose}>
-                    <DialogTitle id="CreatePopup">
-                        Create Post
-                </DialogTitle>
+                <Button onClick={this.handleOpen} id="CreateButton" variant="outlined" >Create a Creepy Submission</Button>
+                <Dialog
+                    fullWidth
+                    open={this.state.handleopen}
+                    onClose={this.handleClose}
+                    aria-labelledby="scroll-dialog-title"
+                    aria-describedby="scroll-dialog-description"
+                >
+                        <DialogTitle id="scroll-dialog-title">Create Submission</DialogTitle>
                     <DialogContent id="Create">
                         <TextField
                             margin="dense"
