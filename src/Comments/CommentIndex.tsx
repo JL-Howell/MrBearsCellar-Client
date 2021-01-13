@@ -6,12 +6,15 @@ import Grid from '@material-ui/core/Grid';
 
 type Props = {
     token: string;
+    // updateToken: (newToken: string) => void,
+    // clearToken: () => void,
 }
 
 type State = {
     myComments: any,
     commentUpdate: any,
     updateActive: boolean,
+    id: number;
 }
 
 export default class SubmitIndex extends React.Component<Props, State> {
@@ -21,6 +24,7 @@ export default class SubmitIndex extends React.Component<Props, State> {
             myComments: [],
             commentUpdate: {},
             updateActive: false,
+            id: 0,
         }
     }
 
@@ -78,6 +82,9 @@ export default class SubmitIndex extends React.Component<Props, State> {
                             <CommentCreate
                                 fetchComments={this.fetchComments.bind(this)}
                                 token={this.props.token}
+                                // updateToken={this.props.updateToken}
+                                // clearToken={this.props.clearToken}
+                            
                             /> : <> </>
                             <CommentTable
                                 myComments={this.state.myComments}

@@ -13,12 +13,17 @@ import {
    DialogActions,
     Typography,
 } from '@material-ui/core';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import Home from '../Components/Home/Home';
+import './Comment.css';
 import Rating from '@material-ui/lab/Rating';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 
 interface Props {
     token: string,
     fetchComments: () => void,
+    // updateToken: (newToken: string) => void,
+    // clearToken: () => void,
 }
 
 type State = {
@@ -110,11 +115,8 @@ export default class CommentCreate extends React.Component<Props, State> {
     render() {
         return (
             <div className="main">
-                <Button onClick={this.handleOpen} id="CreateBtn" variant="outlined" >Comment</Button>
+                    <Button onClick={this.handleOpen} id="CreateBtn" variant="outlined" >Comment</Button>
                 <Dialog open={this.state.handleopen} onClose={this.handleClose}>
-                    <DialogTitle id="dialogTitle">
-                        Comment
-                    </DialogTitle>
                     <DialogContent id="comments">
                         <Typography variant="h6" id="dialogTitle"><strong>Comment</strong></Typography>
                         <FormGroup>
@@ -132,8 +134,8 @@ export default class CommentCreate extends React.Component<Props, State> {
                             <TextField
                                 id="dateInput"
                                 type="date"
-                                value={Date}
                                 variant="outlined"
+                                defaultValue="01/13/2021"
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
@@ -167,10 +169,11 @@ export default class CommentCreate extends React.Component<Props, State> {
                         <Box justifyContent="center">
                             <Button onClick={this.handleSubmit} className="createReviewButton">
                                 <SkipPreviousIcon id="backIcon" />{" "}{" "}Back</Button>
-                            <Button type="submit" className="createReviewButton" id="submitButton"><strong>Submit Comment</strong></Button>
+                            <Button type="submit" className="createReviewButton" id="submitButton"onClick={this.handleOpen} ><strong>Submit Comment</strong></Button>
                         </Box>
                     </DialogActions>
                 </Dialog>
+              
             </div >
         )
     }
