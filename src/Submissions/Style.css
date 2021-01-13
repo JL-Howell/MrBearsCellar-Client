@@ -1,3 +1,23 @@
-#contained-button-file {
-    display: none,
+#CreateButton {
+    font-family: 'Butcherman', cursive;
+    font-size: 30px;
+    border-Radius: 3;
+    margin-left: 35%;
+    border: 1px solid white;
+    color: white;
+    padding: 0 20px;
+}
+
+#displaycontent {
+    display: flex;
+    justify-content: center;
+  
+}
+
+#editBtn {
+    color: white;
+}
+
+#deleteBtn {
+    color: white;
 }

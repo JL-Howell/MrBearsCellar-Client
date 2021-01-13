@@ -76,9 +76,7 @@ export default class Login extends React.Component<Props, SigninState>{
     render() {
         return (
             <div>
-                <Button onClick={this.handleOpen} id="LoginButton" variant="outlined">
-                    LOGIN
-                </Button>
+                <Button onClick={this.handleOpen} id="LoginButton" variant="outlined">LOGIN</Button>
                 <Dialog open={this.state.handleopen} onClose={this.handleClose}>
                 <DialogTitle id="dialogTitle">
                    LOGIN

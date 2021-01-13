@@ -1,3 +1,4 @@
+
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -58,7 +59,7 @@ export default class TopBar extends React.Component<Props, State> {
     return (
         <div className="container">
             <img src={logo} id="logo" alt="Logo" />
-          <AppBar id="appBar" position="static" >
+          <AppBar id="appBar" position="fixed" >
             <Toolbar className="root">
 				<ButtonGroup>
 					{!this.props.token && (
@@ -82,6 +83,3 @@ export default class TopBar extends React.Component<Props, State> {
       );
     }
 };
-
-
-

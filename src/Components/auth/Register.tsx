@@ -19,6 +19,7 @@ type RegisterState = {
     password: string;
     role: boolean;
     handleopen: boolean;
+    
 }
 
 class SignUp extends React.Component<Props, RegisterState> {
@@ -52,7 +53,8 @@ class SignUp extends React.Component<Props, RegisterState> {
            .then(res => res.json())
            .then(data => {
                console.log(data);
-               this.props.updateToken(data.sessionToken);
+               console.log(data.token);
+               this.props.updateToken(data.token);
                this.handleClose();
            })
        }
