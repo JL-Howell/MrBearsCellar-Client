@@ -58,7 +58,7 @@ export default class TopBar extends React.Component<Props, State> {
     return (
         <div className="container">
             <img src={logo} id="logo" alt="Logo" />
-          <AppBar id="appBar" position="static" >
+          <AppBar id="appBar" position="fixed" >
             <Toolbar className="root">
 				<ButtonGroup>
 					{!this.props.token && (

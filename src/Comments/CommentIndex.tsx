@@ -1,55 +1,65 @@
 import React from 'react';
-import SubmitPost from './SubmitPost';
-import SubmitEdit from './SubmitEdit';
-import SubmitTable from './SubmitTable';
+import CommentCreate from './CommentCreate';
+import CommentEdit from './CommentEdit';
+import CommentTable from './CommentTable';
 import Grid from '@material-ui/core/Grid';
-import './Style.css';
 import APIURL from '../../helpers/environment';
 
 type Props = {
     token: string;
+    // updateToken: (newToken: string) => void,
+    // clearToken: () => void,
 }
 
 type State = {
-    mySubs: any,
-    submissionUpdate: any,
+    myComments: any,
+    commentUpdate: any,
     updateActive: boolean,
+
 }
 
 export default class SubmitIndex extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            mySubs: [],
-            submissionUpdate: {},
+            myComments: [],
+            commentUpdate: {},
             updateActive: false,
         }
+          
     }
-    fetchSubs = () => {
-        fetch(`${APIURL}/submission/mine`, {
+
+    fetchComments = () => {
+        console.log(this.props.token);
+        fetch(`${APIURL}/comment/mine`, {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',
                 'Authorization': `${localStorage.getItem("token")}`
-
             })
         })
             .then((res) => res.json())
             .then((subData) => {
                 this.setState({
-                    mySubs: subData.submissions
+                    myComments: subData.comments
                 })
-                console.log("Submissions", this.state.mySubs)
+                console.log("Comments", this.state.myComments)
             })
     }
 
     componentDidMount() {
-        this.fetchSubs()
+        this.fetchComments()
     }
 
-    editUpdateSubmits = (submission: any) => {
+    editUpdateComments = (comments: any) => {
         this.setState({
-            submissionUpdate: submission
+            commentUpdate: comments
+        })
+    }
+
+    editCreateComments = (comments: any) => {
+        this.setState({
+            commentUpdate: comments
         })
     }
 
@@ -70,23 +80,26 @@ export default class SubmitIndex extends React.Component<Props, State> {
             <div className="Container">
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
-                            <SubmitPost
-                                fetchSubs={this.fetchSubs.bind(this)}
+                            {/* <CommentCreate
+                                fetchComments={this.fetchComments.bind(this)}
                                 token={this.props.token}
-                            /> : <> </>
-                            <SubmitTable
-                                mySubs={this.state.mySubs}
-                                editUpdateSubmits={this.editUpdateSubmits.bind(this)}
+                                // updateToken={this.props.updateToken}
+                                // clearToken={this.props.clearToken}
+                            
+                            /> : <> </> */}
+                            <CommentTable
+                                myComments={this.state.myComments}
+                                editUpdateComments={this.editUpdateComments.bind(this)}
                                 updateOn={this.updateOn.bind(this)}
-                                fetchSubs={this.fetchSubs.bind(this)}
+                                fetchComments={this.fetchComments.bind(this)}
                                 token={this.props.token}
                         />
                         {this.state.updateActive ?
-                            <SubmitEdit
-                                submissionUpdate={this.state.submissionUpdate}
+                            <CommentEdit
+                                commentUpdate={this.state.commentUpdate}
                                 updateOff={this.updateOff.bind(this)}
                                 token={this.props.token}
-                                fetchSubs={this.fetchSubs.bind(this)}
+                                fetchComments={this.fetchComments.bind(this)}
                             />
                             : <></>}
                     </Grid>

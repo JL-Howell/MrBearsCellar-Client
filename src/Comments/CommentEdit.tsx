@@ -6,53 +6,57 @@ import {
     DialogContent,
     DialogTitle,
     TextField,
+    Box,
 } from '@material-ui/core';
+import Rating from '@material-ui/lab/Rating';
 import ClearIcon from '@material-ui/icons/Clear';
 import IconButton from '@material-ui/core/IconButton/IconButton';
 import APIURL from '../../helpers/environment';
 
 type Props = {
-    fetchSubs: () => void,
+    fetchComments: () => void,
     updateOff: () => void,
     token: string,
-    submissionUpdate: any,
+    commentUpdate: any,
 }
 
 type State = {
-    title: string;
+    username: string;
     date: string;
     entry: string;
+    rating: number;
     handleopen: boolean,
-    
+
 }
 
-export default class SubmissionEdit extends React.Component<Props, State> {
+export default class CommentEdit extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            title: this.props.submissionUpdate.title,
-            date: this.props.submissionUpdate.date,
-            entry: this.props.submissionUpdate.entry,
+            username: this.props.commentUpdate.username,
+            date: this.props.commentUpdate.date,
+            entry: this.props.commentUpdate.entry,
+            rating: this.props.commentUpdate.rating,
             handleopen: false,
-           
+
         }
     }
 
-    handleUpdate = (event: React.SyntheticEvent) => {
+    handleUpdate = (event: any) => {
         event.preventDefault();
-        fetch(`${APIURL}/submission/update/${this.props.submissionUpdate.id}`, {
+        fetch(`${APIURL}/comment/${this.props.commentUpdate.id}`, {
             method: 'PUT',
+            body: JSON.stringify({ username: this.state.username, date: this.state.date, entry: this.state.entry, rating: this.props.commentUpdate.rating }),
             headers: new Headers({
                 'Content-Type': 'application/json',
                 'Authorization': this.props.token
-            }),
-            body: JSON.stringify({title: this.state.title, date: this.state.date, entry: this.state.entry})
-        }) .then(() => {
-            this.props.updateOff();
-            this.props.fetchSubs();
-            
-        }) 
-     
+            })
+        })
+            .then(() => {
+                this.props.fetchComments();
+                this.props.updateOff();
+
+            })
     };
 
     closeUpdate = () => {
@@ -70,20 +74,20 @@ export default class SubmissionEdit extends React.Component<Props, State> {
             handleopen: false,
         })
     }
-    
+
     render() {
-        return (    
+        return (
             <div className="editContainer">
-                <Dialog open={true} >
+                <Dialog open={true} onClose={this.closeUpdate}>
                     <DialogTitle id="dialogTitle">Update Submission<IconButton className="exit-btn-post-edit" onClick={this.closeUpdate}><ClearIcon /></IconButton></DialogTitle>
                     <DialogContent id="Edit" >
                         <TextField
                             margin="dense"
-                            label="edit title"
+                            label="edit username"
                             type="text"
                             fullWidth
-                            value={this.state.title}
-                            onChange={(event) => this.setState({title: event.target.value})}
+                            value={this.state.username}
+                            onChange={(event) => this.setState({username: event.target.value})}
                         />
                         <TextField
                             margin="dense"
@@ -99,10 +103,26 @@ export default class SubmissionEdit extends React.Component<Props, State> {
                             type="text"
                             fullWidth
                             value={this.state.entry}
-                            onChange={(event) => {this.setState({entry: event.target.value})}}
+                            onChange={(event) => this.setState({entry: event.target.value})}
                         />
+                        <Box
+                            component="fieldset"
+                            mb={3}
+                            borderColor="transparent"
+                            id="ratingsBox"
+                        >
+                            <Rating
+                                name="rating"
+                                value={this.state.rating}
+                                onChange={(e, newValue) =>
+                                    this.setState({ rating: Number(newValue) })
+                                }
+                            />
+                        </Box>
+                            <Button type="submit" id="btn" onClick={this.handleUpdate}>Update Comment</Button>
                     </DialogContent>
-                        <Button type="submit" id="btn" onClick={this.handleUpdate} >Submit</Button>
+                        <DialogActions id="Createbtn">
+                        </DialogActions>
                 </Dialog>
             </div>
         )
