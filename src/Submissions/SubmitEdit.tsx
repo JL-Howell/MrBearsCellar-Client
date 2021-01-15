@@ -2,14 +2,13 @@ import React from 'react';
 import {
     Button,
     Dialog,
-    DialogActions,
     DialogContent,
     DialogTitle,
     TextField,
 } from '@material-ui/core';
 import ClearIcon from '@material-ui/icons/Clear';
 import IconButton from '@material-ui/core/IconButton/IconButton';
-import APIURL from '../../helpers/environment';
+
 
 type Props = {
     fetchSubs: () => void,
@@ -40,7 +39,7 @@ export default class SubmissionEdit extends React.Component<Props, State> {
 
     handleUpdate = (event: React.SyntheticEvent) => {
         event.preventDefault();
-        fetch(`${APIURL}/submission/update/${this.props.submissionUpdate.id}`, {
+        fetch(`http://localhost:4000/submission/update/${this.props.submissionUpdate.id}`, {
             method: 'PUT',
             headers: new Headers({
                 'Content-Type': 'application/json',
@@ -54,6 +53,7 @@ export default class SubmissionEdit extends React.Component<Props, State> {
         }) 
      
     };
+
 
     closeUpdate = () => {
         this.props.updateOff();
@@ -102,7 +102,8 @@ export default class SubmissionEdit extends React.Component<Props, State> {
                             onChange={(event) => {this.setState({entry: event.target.value})}}
                         />
                     </DialogContent>
-                        <Button type="submit" id="btn" onClick={this.handleUpdate} >Submit</Button>
+                    <Button type="submit" id="btn" onClick={this.handleUpdate}>Update Here</Button>
+             
                 </Dialog>
             </div>
         )

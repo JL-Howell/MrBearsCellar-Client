@@ -15,7 +15,6 @@ import {
 } from '@material-ui/core';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import './Style.css';
-import APIURL from '../helpers/environment';
 
 interface Props {
     token: string,
@@ -49,7 +48,7 @@ export default class SubmissionCreate extends React.Component<Props, State> {
         subData.append('title', this.state.title)
         subData.append('date', this.state.date)
         subData.append('entry', this.state.entry)
-        fetch(`${APIURL}/submission/create`, {
+        fetch(`http://localhost:4000/submission/create`, {
             method: 'POST',
             body: subData, 
             headers: new Headers({
@@ -108,15 +107,15 @@ export default class SubmissionCreate extends React.Component<Props, State> {
     render() {
         return (
             <div className="main">
-                    <Button onClick={this.handleOpen} id="CreateBtn" variant="outlined" >Create A Creepy Submissison</Button>
+                    <Button onClick={this.handleOpen} id="Creepy" variant="outlined" >Create A Creepy Submissison</Button>
                 <Dialog open={this.state.handleopen} onClose={this.handleClose}>
                     <DialogTitle id="dialogTitle">
-                        Submission
+                        <strong>Submit if you Dare!</strong>
                     </DialogTitle>
                     <DialogContent id="Submission">
-                        <Typography variant="h6" id="dialogTitle"><strong>Submit if you Dare!</strong></Typography>
+                       
                         <FormGroup>
-                            <InputLabel htmlFor="Username" id="titleLabel">Username</InputLabel>
+                            <InputLabel htmlFor="title" id="titleLabel"><strong>Title</strong></InputLabel>
                             <TextField
                                 id="titleInput"
                                 name="title"
@@ -126,7 +125,7 @@ export default class SubmissionCreate extends React.Component<Props, State> {
                             />
                         </FormGroup>
                         <FormGroup>
-                            <InputLabel htmlFor="date" id="dateLabel">Date</InputLabel>
+                            <InputLabel htmlFor="date" id="dateLabel"><strong>Date</strong></InputLabel>
                             <TextField
                                 id="dateInput"
                                 type="date"
@@ -139,7 +138,7 @@ export default class SubmissionCreate extends React.Component<Props, State> {
                             >Date</TextField>
                         </FormGroup>
                         <FormGroup>
-                            <InputLabel htmlFor="entry" id="entryLabel">Entry</InputLabel>
+                            <InputLabel htmlFor="entry" id="entryLabel"><strong>Entry</strong></InputLabel>
                             <TextField
                                 name={this.state.entry}
                                 multiline rowsMax={6}
@@ -162,10 +161,10 @@ export default class SubmissionCreate extends React.Component<Props, State> {
                         </FormControl>
                     </DialogContent>
                     <DialogActions id="commentBtns">
-                        <Box justifyContent="center">
-                            <Button onClick={this.handleSubmit} className="createReviewButton">
+                    <Box justifyContent="center">
+                            <Button onClick={this.handleClose} className="createReviewButton">
                                 <SkipPreviousIcon id="backIcon" />{" "}{" "}Back</Button>
-                            <Button type="submit" className="createReviewButton" id="submitButton"><strong>Submit Comment</strong></Button>
+                            <Button type="submit" className="createReviewButton" id="submitButton"onClick={this.handleSubmit}><strong>Enter</strong></Button>
                         </Box>
                     </DialogActions>
                 </Dialog>

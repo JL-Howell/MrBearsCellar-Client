@@ -11,7 +11,7 @@ import {
 import Rating from '@material-ui/lab/Rating';
 import ClearIcon from '@material-ui/icons/Clear';
 import IconButton from '@material-ui/core/IconButton/IconButton';
-import APIURL from '../../helpers/environment';
+
 
 type Props = {
     fetchComments: () => void,
@@ -44,7 +44,7 @@ export default class CommentEdit extends React.Component<Props, State> {
 
     handleUpdate = (event: any) => {
         event.preventDefault();
-        fetch(`${APIURL}/comment/${this.props.commentUpdate.id}`, {
+        fetch(`http://localhost:4000/comment/${this.props.commentUpdate.id}`, {
             method: 'PUT',
             body: JSON.stringify({ username: this.state.username, date: this.state.date, entry: this.state.entry, rating: this.props.commentUpdate.rating }),
             headers: new Headers({

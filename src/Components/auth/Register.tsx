@@ -8,7 +8,7 @@ import {
     DialogTitle,
 } from '@material-ui/core';
 import './auth.css';
-import APIURL from '../../helpers/environment';
+
 
 type Props = {
     updateToken: (newToken: string) => void,
@@ -40,7 +40,7 @@ class SignUp extends React.Component<Props, RegisterState> {
        if (this.state.password.length < 8) {
            alert('password must be at least 8 characters')
        } else {
-        fetch(`${APIURL}/user/signup`, {
+        fetch(`http://localhost:4000/user/signup`, {
                method: "POST", 
                body: JSON.stringify({
                     username: this.state.username,

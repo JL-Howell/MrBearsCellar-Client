@@ -8,21 +8,21 @@ import {
     Box,
     TextField,
     Dialog,
-    DialogTitle,
     DialogContent,
    DialogActions,
     Typography,
 } from '@material-ui/core';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import Home from '../Components/Home/Home';
+import Home from '../Components/Home/home';
 import './Comment.css';
 import Rating from '@material-ui/lab/Rating';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
-import APIURL from '../../helpers/environment';
+
 
 interface Props {
     token: string,
     subId: number
+    // key: number,
     // updateToken: (newToken: string) => void,
     // clearToken: () => void,
 }
@@ -51,7 +51,7 @@ export default class CommentCreate extends React.Component<Props, State> {
 
     handleSubmit = (event: React.SyntheticEvent) => {
         event.preventDefault();
-        fetch(`${APIURL}/comment/create/${this.props.subId}`, {
+        fetch(`http://localhost:4000/comment/create/${this.props.subId}`, {
             method: 'POST',
             body: JSON.stringify({
                 username: this.state.username,
@@ -80,6 +80,8 @@ export default class CommentCreate extends React.Component<Props, State> {
         this.setState({
             handleopen: true,
         });
+        console.log('props:', this.props)
+        console.log('state:', this.state)
     };
 
     handleClose = () => {
@@ -167,9 +169,9 @@ export default class CommentCreate extends React.Component<Props, State> {
                     </DialogContent>
                     <DialogActions id="commentBtns">
                         <Box justifyContent="center">
-                            <Button onClick={this.handleSubmit} className="createReviewButton">
+                            <Button onClick={this.handleClose} className="createReviewButton">
                                 <SkipPreviousIcon id="backIcon" />{" "}{" "}Back</Button>
-                            <Button type="submit" className="createReviewButton" id="submitButton"onClick={this.handleOpen} ><strong>Submit Comment</strong></Button>
+                            <Button type="submit" className="createReviewButton" id="submitButton"onClick={this.handleSubmit} ><strong>Submit Comment</strong></Button>
                         </Box>
                     </DialogActions>
                 </Dialog>

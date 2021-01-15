@@ -4,7 +4,7 @@ import SubmitEdit from './SubmitEdit';
 import SubmitTable from './SubmitTable';
 import Grid from '@material-ui/core/Grid';
 import './Style.css';
-import APIURL from '../../helpers/environment';
+
 
 type Props = {
     token: string;
@@ -26,7 +26,7 @@ export default class SubmitIndex extends React.Component<Props, State> {
         }
     }
     fetchSubs = () => {
-        fetch(`${APIURL}/submission/mine`, {
+        fetch(`http://localhost:4000/submission/mine`, {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ export default class SubmitIndex extends React.Component<Props, State> {
             .then((res) => res.json())
             .then((subData) => {
                 this.setState({
-                    mySubs: subData.submissions
+                    mySubs: subData
                 })
                 console.log("Submissions", this.state.mySubs)
             })

@@ -1,19 +1,17 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link, Switch} from 'react-router-dom';
+import { BrowserRouter as Router} from 'react-router-dom';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import Button from '@material-ui/core/Button';
-import AppBar from './AppBar';
+import AppBar from './SideDrawer';
 import SubmitIndex from '../../Submissions/SubmitIndex';
 import CommentIndex from '../../Comments/CommentIndex';
-import CommentCreate from '../../Comments/CommentIndex';
+import CommentCreate from '../../Comments/CommentCreate';
 import './Home.css';
-import APIURL from '../../helpers/environment';
 
 interface Props {
-    updateToken: (newToken: string) => void,
-    clearToken: () => void,
+    updateToken: (newToken: string) => void;
+    clearToken: () => void;
     token: string,
 }
 
@@ -43,7 +41,7 @@ export default class SubmissionIndex extends React.Component<Props, State> {
     }
 
     fetchSubmissions = () => {
-        fetch(`${APIURL}/submission/`, {
+        fetch(`http://localhost:4000/submission/`, {
             method: 'GET',
         })
             .then(res => res.json())
@@ -57,6 +55,8 @@ export default class SubmissionIndex extends React.Component<Props, State> {
 
     componentDidMount() {
         this.fetchSubmissions();
+        console.log('props: ', this.props)
+        console.log('state: ', this.state)
     }
 
     handleOpen = () => {
@@ -73,34 +73,34 @@ export default class SubmissionIndex extends React.Component<Props, State> {
 
     render() {
         return (
-            <div className="Home">
+            <React.Fragment>
                 <Router>
-                    <header className={"container"}>
-                        <AppBar clickLogout={this.props.clearToken} updateToken={this.props.updateToken} token={this.props.token} />
-                        <SubmitIndex token={this.props.token} />
+                    <div className="Home">
+                        <AppBar  updateToken={this.props.updateToken} token={this.props.token} clearToken={this.props.clearToken}/>
                         <CommentIndex token={this.props.token} />
-                    </header>
+                        <SubmitIndex token={this.props.token} />
+                    </div>
                 </Router>
-                
+                <div className="CardCenter">
                     {/* <CardContent> */}
                         {this.state.allSubs.map(allSubs => {
                             return (
-                                <div className="CardCenter">
-                                    <Card key={allSubs.id} id="CardTable">
-                                        <CardContent><img src={allSubs.imageUrl} width="50%" height="50%"/> </CardContent>
-                                        <CardContent ><strong>{allSubs.title}</strong></CardContent>
-                                        <CardContent >{allSubs.entry}</CardContent>
-                                        <CardContent >{allSubs.date}</CardContent>
-                                        <CommentCreate key={allSubs.id} token={this.props.token}/>
-                                        {/* <CommentIndex key={allSubs.id} token={this.props.token} /> */}
-                                        {/* <Button onClick={this.handleOpen} id="CreateBtn" variant="outlined" >Comment</Button> */}
-                                        <hr />
-                                    </Card>
-                                </div>
+                                <Card key={allSubs.id} id="CardTable">
+                                    <CardContent><img src={allSubs.imageUrl} width="50%" height="50%"/> </CardContent>
+                                    <CardContent ><strong>{allSubs.title}</strong></CardContent>
+                                    <CardContent >{allSubs.entry}</CardContent>
+                                    <CardContent >{allSubs.date}</CardContent>
+                                    <CommentCreate subId={allSubs.id} token={this.props.token} />
+                                    <CardActions>
+                                    {/* <Button onClick={this.handleOpen} id="CreateBtn" variant="outlined" >Comment</Button> */}
+                                    </CardActions>   
+                                   
+                                </Card>
                             )
                         })};
-                
-            </div>
+                    {/* </CardContent> */}
+                </div>
+            </React.Fragment>
 
         )
     }

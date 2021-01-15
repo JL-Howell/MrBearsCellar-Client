@@ -5,7 +5,8 @@ body {
 #CardTable {
     width: 30%;
     height: auto;
-    justify-items: center;
+    margin: 5%;
+    margin-left: 65vh;
     text-align: center;
     background-color: rgb(44, 5, 5);
     color: white;
@@ -45,9 +46,3 @@ body {
     padding: 0 28px;
 }
 
-#displayCard {
-    /* background-color: darkgrey; */
-    width: 50%;
-    height: 50%;
-
-}

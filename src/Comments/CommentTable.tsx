@@ -3,7 +3,7 @@ import { Card, CardContent } from '@material-ui/core';
 import ClearIcon from '@material-ui/icons/Clear';
 import CreateIcon from '@material-ui/icons/Create';
 import IconButton from '@material-ui/core/IconButton/IconButton';
-import APIURL from '../../helpers/environment';
+
 
 type Props = {
     myComments: Array<{
@@ -26,7 +26,7 @@ export default class submissionTable extends React.Component<Props> {
     }
 
     commentDelete = (comment: any) => {
-        fetch(`${APIURL}/comment/${comment.id}`, {
+        fetch(`http://localhost:4000/comment/${comment.id}`, {
             method: 'DELETE',
             headers: new Headers({
                 'Content-Type': 'application/json',
@@ -56,4 +56,3 @@ export default class submissionTable extends React.Component<Props> {
             )
         }
 }
-

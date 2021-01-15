@@ -4,7 +4,7 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
 import IconButton from '@material-ui/core/IconButton/IconButton';
 import'./Style.css';
-import APIURL from '../helpers/environment';
+
 
 
 type Props = {
@@ -28,7 +28,7 @@ export default class submissionTable extends React.Component<Props> {
     }
 
     submissionDelete = (submission: any) => {
-        fetch(`${APIURL}/submission/delete/${submission.id}`, {
+        fetch(`http://localhost:4000/submission/delete/${submission.id}`, {
             method: 'DELETE',
             headers: new Headers({
                 'Content-Type': 'application/json',

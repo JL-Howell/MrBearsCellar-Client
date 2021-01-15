@@ -3,7 +3,7 @@ import CommentCreate from './CommentCreate';
 import CommentEdit from './CommentEdit';
 import CommentTable from './CommentTable';
 import Grid from '@material-ui/core/Grid';
-import APIURL from '../../helpers/environment';
+
 
 type Props = {
     token: string;
@@ -15,7 +15,6 @@ type State = {
     myComments: any,
     commentUpdate: any,
     updateActive: boolean,
-
 }
 
 export default class SubmitIndex extends React.Component<Props, State> {
@@ -26,22 +25,21 @@ export default class SubmitIndex extends React.Component<Props, State> {
             commentUpdate: {},
             updateActive: false,
         }
-          
     }
 
     fetchComments = () => {
         console.log(this.props.token);
-        fetch(`${APIURL}/comment/mine`, {
+        fetch(`http://localhost:4000/comment/mine`, {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',
-                'Authorization': `${localStorage.getItem("token")}`
+                'Authorization': `${localStorage.getItem("token")}`,
             })
         })
             .then((res) => res.json())
             .then((subData) => {
                 this.setState({
-                    myComments: subData.comments
+                    myComments: subData
                 })
                 console.log("Comments", this.state.myComments)
             })
@@ -81,7 +79,6 @@ export default class SubmitIndex extends React.Component<Props, State> {
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
                             {/* <CommentCreate
-                                fetchComments={this.fetchComments.bind(this)}
                                 token={this.props.token}
                                 // updateToken={this.props.updateToken}
                                 // clearToken={this.props.clearToken}
@@ -105,8 +102,6 @@ export default class SubmitIndex extends React.Component<Props, State> {
                     </Grid>
                 </Grid>
             </div>
-
-
         )
     }
 }
