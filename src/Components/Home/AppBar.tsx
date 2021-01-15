@@ -4,19 +4,18 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Typography from '@material-ui/core/Typography';
-import logo from '../../assets/mrbearscellar.png';
-import SideDrawer from './SideDrawer';
-import Grid from '@material-ui/core/Grid';
+// import logo from '../../Assets/mrbearcellar.png';
+// import SideDrawer from './SideDrawer';
+// import Grid from '@material-ui/core/Grid';
 import './Home.css';
 
 import Login from '../Auth/Login';
 import Register from '../Auth/Register';
 
 interface Props {
-    token: string;
-    clickLogout: () => void;
-    updateToken: (newToken: string) => void;
-    clearToken: () => void;
+  token: string | null;
+  clickLogout: () => void;
+  updateToken: (newToken: string) => void;
    
 }
 
@@ -61,10 +60,10 @@ export default class TopBar extends React.Component<Props, State> {
     render() {
     return (
         <div className="container">
-            <img src={logo} id="logo" alt="Logo" />
+            {/* <img src={logo} id="logo" alt="Logo" /> */}
           <AppBar id="appBar" position="fixed" >
             <Toolbar className="root">
-              <SideDrawer updateToken={this.props.updateToken} clearToken={this.props.clearToken} token={this.props.token}/>
+              {/* <SideDrawer updateToken={this.props.updateToken} clearToken={this.props.clearToken} token={this.props.token}/> */}
 				<ButtonGroup>
 					{!this.props.token && (
 						<Register 

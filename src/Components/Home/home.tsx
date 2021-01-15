@@ -3,11 +3,12 @@ import { BrowserRouter as Router} from 'react-router-dom';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import AppBar from './SideDrawer';
+import AppBar from './AppBar';
 import SubmitIndex from '../../Submissions/SubmitIndex';
 import CommentIndex from '../../Comments/CommentIndex';
 import CommentCreate from '../../Comments/CommentCreate';
 import './Home.css';
+
 
 interface Props {
     updateToken: (newToken: string) => void;
@@ -76,7 +77,7 @@ export default class SubmissionIndex extends React.Component<Props, State> {
             <React.Fragment>
                 <Router>
                     <div className="Home">
-                        <AppBar  updateToken={this.props.updateToken} token={this.props.token} clearToken={this.props.clearToken}/>
+                        <AppBar clickLogout={this.props.clearToken} updateToken={this.props.updateToken} token={this.props.token} />
                         <CommentIndex token={this.props.token} />
                         <SubmitIndex token={this.props.token} />
                     </div>

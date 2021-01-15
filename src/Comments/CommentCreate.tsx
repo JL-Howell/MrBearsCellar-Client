@@ -12,8 +12,6 @@ import {
    DialogActions,
     Typography,
 } from '@material-ui/core';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import Home from '../Components/Home/home';
 import './Comment.css';
 import Rating from '@material-ui/lab/Rating';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
