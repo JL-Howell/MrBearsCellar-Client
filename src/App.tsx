@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router } from 'react-router-dom';
-import Home from './Components/Home/Home';
+import Home from './Components/Home/home';
 
 type State = {
   token: string,
@@ -48,13 +48,15 @@ export default class App extends React.Component<{}, State>  {
   render(){
     
     return (
-      <div>
-        <header className="app-header">
-          <Router>
-            <Home clearToken={this.clearToken.bind(this)} updateToken={this.updateToken.bind(this)} token={this.state.token}/>
-          </Router>
-        </header>
-    </div>
+      <div className="stars">
+        <div className="twinkling">
+          <div className="clouds">
+            <Router>
+              <Home clearToken={this.clearToken.bind(this)} updateToken={this.updateToken.bind(this)} token={this.state.token}/>
+            </Router>
+          </div>
+        </div>
+      </div>
     );
   }
 }

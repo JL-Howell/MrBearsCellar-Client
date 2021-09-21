@@ -13,12 +13,10 @@ import {
    DialogActions,
     Typography,
 } from '@material-ui/core';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import Home from '../Components/Home/Home';
 import './Comment.css';
 import Rating from '@material-ui/lab/Rating';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
-import APIURL from '../../helpers/environment';
+import APIURL from '../helpers/environment';
 
 interface Props {
     token: string,
@@ -167,13 +165,12 @@ export default class CommentCreate extends React.Component<Props, State> {
                     </DialogContent>
                     <DialogActions id="commentBtns">
                         <Box justifyContent="center">
-                            <Button onClick={this.handleSubmit} className="createReviewButton">
+                            <Button onClick={this.handleOpen} className="createReviewButton">
                                 <SkipPreviousIcon id="backIcon" />{" "}{" "}Back</Button>
-                            <Button type="submit" className="createReviewButton" id="submitButton"onClick={this.handleOpen} ><strong>Submit Comment</strong></Button>
+                            <Button type="submit" className="createReviewButton" id="submitButton"onClick={this.handleSubmit} ><strong>Submit Comment</strong></Button>
                         </Box>
                     </DialogActions>
                 </Dialog>
-              
             </div >
         )
     }

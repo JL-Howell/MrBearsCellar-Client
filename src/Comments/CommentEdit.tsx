@@ -11,7 +11,7 @@ import {
 import Rating from '@material-ui/lab/Rating';
 import ClearIcon from '@material-ui/icons/Clear';
 import IconButton from '@material-ui/core/IconButton/IconButton';
-import APIURL from '../../helpers/environment';
+import APIURL from '../helpers/environment';
 
 type Props = {
     fetchComments: () => void,

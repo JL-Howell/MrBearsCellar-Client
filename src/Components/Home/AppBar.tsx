@@ -4,6 +4,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 import logo from '../../Assets/mrbearscellar.png';
 import './Home.css';
 
@@ -56,7 +57,9 @@ export default class TopBar extends React.Component<Props, State> {
 
     render() {
     return (
-        <div className="container">
+      <div className="container">
+          <Grid container spacing={10} style={{padding: 24}}>
+            <Grid item xs={12} sm={6} lg={4} xl={12}>
             <img src={logo} id="logo" alt="Logo" />
           <AppBar id="appBar" position="fixed" >
             <Toolbar className="root">
@@ -78,6 +81,8 @@ export default class TopBar extends React.Component<Props, State> {
             </Toolbar>
           </AppBar>
               <Typography id="CellarText" variant="h2" >Latest Cellar Stories</Typography>
+            </Grid>
+          </Grid>
         </div>
       );
     }

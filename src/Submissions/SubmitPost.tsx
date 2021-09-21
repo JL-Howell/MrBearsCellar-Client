@@ -2,16 +2,14 @@ import React from 'react';
 import {
     Button,
     FormGroup,
-    FormLabel,
-    FormControl,
     InputLabel,
     Box,
     TextField,
     Dialog,
-    DialogTitle,
     DialogContent,
-   DialogActions,
+    DialogActions,
     Typography,
+    Grid,
 } from '@material-ui/core';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import './Style.css';
@@ -20,6 +18,8 @@ import APIURL from '../helpers/environment';
 interface Props {
     token: string,
     fetchSubs: () => void,
+    SubmissionCreate: any,
+    createOff: () => void,
 }
 
 type State = {
@@ -108,15 +108,16 @@ export default class SubmissionCreate extends React.Component<Props, State> {
     render() {
         return (
             <div className="main">
-                    <Button onClick={this.handleOpen} id="CreateBtn" variant="outlined" >Create A Creepy Submissison</Button>
+                <Grid container spacing={2} style={{padding: 2}}>
+                    <Grid item xs={12} sm={6} lg={4} xl={12}>
+                        <Button onClick={this.handleOpen} id="CreateBtn" variant="outlined">Submit a Creepy Story</Button>\
+                    </Grid>
+                </Grid>
                 <Dialog open={this.state.handleopen} onClose={this.handleClose}>
-                    <DialogTitle id="dialogTitle">
-                        Submission
-                    </DialogTitle>
-                    <DialogContent id="Submission">
-                        <Typography variant="h6" id="dialogTitle"><strong>Submit if you Dare!</strong></Typography>
+                    <DialogContent id="submissions">
+                        <Typography variant="h6" id="dialogTitle"><strong>Submission</strong></Typography>
                         <FormGroup>
-                            <InputLabel htmlFor="Username" id="titleLabel">Username</InputLabel>
+                            <InputLabel htmlFor="Title" id="titleLabel">Title</InputLabel>
                             <TextField
                                 id="titleInput"
                                 name="title"
@@ -131,7 +132,7 @@ export default class SubmissionCreate extends React.Component<Props, State> {
                                 id="dateInput"
                                 type="date"
                                 variant="outlined"
-                                defaultValue="1982-05-10"
+                                defaultValue="00/00/0000"
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
@@ -148,74 +149,30 @@ export default class SubmissionCreate extends React.Component<Props, State> {
                                 onChange={(e) => this.setEntry(e.target.value)}
                             />
                         </FormGroup>
-                        <FormControl component="fieldset" id="ratingLabel">
-                            <FormLabel component="legend" id="ratingLabel"><strong>Image</strong></FormLabel>
-                            <Box component="fieldset" mb={3} borderColor="transparent" id="ratingsBox">
-                            <input
+                        <input
                             accept="image/*"
                             className="inputImage"
                             id="contained-button-file"
                             type="file"
                             onChange={this.singleFileChangedHandler}
                         />
-                            </Box>
-                        </FormControl>
                     </DialogContent>
                     <DialogActions id="commentBtns">
                         <Box justifyContent="center">
-                            <Button onClick={this.handleSubmit} className="createReviewButton">
+                            <Button onClick={this.handleClose} className="createReviewButton">
                                 <SkipPreviousIcon id="backIcon" />{" "}{" "}Back</Button>
-                            <Button type="submit" className="createReviewButton" id="submitButton"><strong>Submit Comment</strong></Button>
+                            <Button type="submit" className="createReviewButton" id="submitButton"onClick={this.handleSubmit} ><strong>Submit Story</strong></Button>
                         </Box>
                     </DialogActions>
                 </Dialog>
-              
             </div >
-            // <div className="container">
-            //     <Button onClick={this.handleOpen} id="CreateButton" variant="outlined" >Create a Creepy Submission</Button>
-            //     <Dialog
-            //         fullWidth
-            //         open={this.state.handleopen}
-            //         onClose={this.handleClose}
-            //         aria-labelledby="scroll-dialog-title"
-            //         aria-describedby="scroll-dialog-description"
-            //     >
-            //             <DialogTitle id="scroll-dialog-title">Create Submission</DialogTitle>
-            //         <DialogContent id="Create">
-            //             <TextField
-            //                 margin="dense"
-            //                 label="Title"
-            //                 type="text"
-            //                 fullWidth
-            //                 onChange={(e) => this.setTitle(e.target.value)}
-            //             />
-            //             <TextField
-            //                 margin="dense"
-            //                 label="Date"
-            //                 type="text"
-            //                 fullWidth
-            //                 onChange={(e) => this.setDate(e.target.value)}
-            //             />
-            //             <TextField
-            //                 margin="dense"
-            //                 label="Entry"
-            //                 type="text"
-            //                 fullWidth
-            //                 onChange={(e) => this.setEntry(e.target.value)}
-            //             />
-            //             <input
-            //                 accept="image/*"
-            //                 className="inputImage"
-            //                 id="contained-button-file"
-            //                 type="file"
-            //                 onChange={this.singleFileChangedHandler}
-            //             />
-            //         </DialogContent>
-            //         <DialogActions id="Createbtn">
-            //             <Button onClick={this.handleSubmit} id="btn">Submit</Button>
-            //         </DialogActions>
-            //     </Dialog>
-            // </div>
+            
         )
     }
 }
+
+
+
+
+
+

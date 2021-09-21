@@ -4,8 +4,7 @@ import SubmitEdit from './SubmitEdit';
 import SubmitTable from './SubmitTable';
 import Grid from '@material-ui/core/Grid';
 import './Style.css';
-import APIURL from '../../helpers/environment';
-
+import APIURL from '../helpers/environment';
 type Props = {
     token: string;
 }
@@ -13,7 +12,9 @@ type Props = {
 type State = {
     mySubs: any,
     submissionUpdate: any,
+    SubmissionCreate: any,
     updateActive: boolean,
+    submissionCreateActive: boolean,
 }
 
 export default class SubmitIndex extends React.Component<Props, State> {
@@ -22,9 +23,12 @@ export default class SubmitIndex extends React.Component<Props, State> {
         this.state = {
             mySubs: [],
             submissionUpdate: {},
+            SubmissionCreate: {},
             updateActive: false,
+            submissionCreateActive: false,
         }
     }
+
     fetchSubs = () => {
         fetch(`${APIURL}/submission/mine`, {
             method: 'GET',
@@ -37,7 +41,7 @@ export default class SubmitIndex extends React.Component<Props, State> {
             .then((res) => res.json())
             .then((subData) => {
                 this.setState({
-                    mySubs: subData.submissions
+                    mySubs: subData
                 })
                 console.log("Submissions", this.state.mySubs)
             })
@@ -48,6 +52,12 @@ export default class SubmitIndex extends React.Component<Props, State> {
     }
 
     editUpdateSubmits = (submission: any) => {
+        this.setState({
+            submissionUpdate: submission
+        })
+    }
+
+    editCreateSubmits = (submission: any) => {
         this.setState({
             submissionUpdate: submission
         })
@@ -65,6 +75,18 @@ export default class SubmitIndex extends React.Component<Props, State> {
         })
     }
 
+    createOff = () => {
+        this.setState({
+            submissionCreateActive: false
+        })
+    }
+
+    createOn = () => {
+        this.setState({
+            submissionCreateActive: true
+        })
+    }
+
     render() {
         return (
             <div className="Container">
@@ -72,8 +94,10 @@ export default class SubmitIndex extends React.Component<Props, State> {
                     <Grid item xs={12}>
                             <SubmitPost
                                 fetchSubs={this.fetchSubs.bind(this)}
+                                SubmissionCreate={this.state.SubmissionCreate}
                                 token={this.props.token}
-                            /> : <> </>
+                                createOff={this.createOff.bind(this)}
+                            /> 
                             <SubmitTable
                                 mySubs={this.state.mySubs}
                                 editUpdateSubmits={this.editUpdateSubmits.bind(this)}
@@ -92,8 +116,6 @@ export default class SubmitIndex extends React.Component<Props, State> {
                     </Grid>
                 </Grid>
             </div>
-
-
         )
     }
 }
