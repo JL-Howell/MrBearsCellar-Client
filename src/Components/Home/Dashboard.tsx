@@ -4,9 +4,9 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import AppBar from './AppBar';
-import SubmitIndex from '../../Submissions/SubmitIndex';
-import CommentIndex from '../../Comments/CommentIndex';
-import CommentCreate from '../../Comments/CommentCreate';
+import SubmitIndex from '../Submissions/SubmitIndex';
+import CommentIndex from '../Comments/CommentIndex';
+import CommentCreate from '../Comments/CommentCreate';
 import './Home.css';
 import APIURL from '../../helpers/environment';
 
@@ -83,7 +83,7 @@ export default class SubmissionIndex extends React.Component<Props, State> {
                     </div>
                 </Router>
                 <div className="CardCenter">
-                    <Grid container spacing={10} style={{padding: 24}}>
+                    <Grid container spacing={8} style={{padding: 14}}>
                         {this.state.allSubs.map(allSubs => {
                             return (
                                 <Grid item xs={12} sm={6} lg={4} xl={4}>

@@ -3,7 +3,7 @@ import { Card, CardContent } from '@material-ui/core';
 import ClearIcon from '@material-ui/icons/Clear';
 import CreateIcon from '@material-ui/icons/Create';
 import IconButton from '@material-ui/core/IconButton/IconButton';
-import APIURL from '../helpers/environment';
+import APIURL from '../../helpers/environment';
 
 type Props = {
     myComments: Array<{

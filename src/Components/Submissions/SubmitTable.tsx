@@ -4,7 +4,7 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
 import IconButton from '@material-ui/core/IconButton/IconButton';
 import'./Style.css';
-import APIURL from '../helpers/environment';
+import APIURL from '../../helpers/environment';
 
 
 type Props = {

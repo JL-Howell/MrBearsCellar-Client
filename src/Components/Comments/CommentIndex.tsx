@@ -3,7 +3,7 @@ import CommentCreate from './CommentCreate';
 import CommentEdit from './CommentEdit';
 import CommentTable from './CommentTable';
 import Grid from '@material-ui/core/Grid';
-import APIURL from '../helpers/environment';
+import APIURL from '../../helpers/environment';
 
 type Props = {
     token: string;

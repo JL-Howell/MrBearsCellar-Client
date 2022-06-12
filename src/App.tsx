@@ -1,7 +1,10 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router } from 'react-router-dom';
-import Home from './Components/Home/home';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Dashboard from './Components/Home/Dashboard';
+import CommentIndex from '../src/Components/Comments/CommentIndex';
+import SubmitIndex from '../src/Components/Submissions/SubmitIndex';
+import AppBar from './Components/Home/AppBar';
 
 type State = {
   token: string,
@@ -11,22 +14,12 @@ export default class App extends React.Component<{}, State>  {
   constructor(props: any){
     super(props)
 
-    // this.updateToken = this.updateToken.bind(this);
-    // this.clearToken = this.clearToken.bind(this);
-    let token = localStorage.getItem('token')
+    const token = localStorage.getItem('token')
     this.state = {
       token: token ? token : '',
     } 
   };
-  // setToken(){
-  //   let sessionToken = localStorage.getItem('token')
-  //     console.log("Token: ", sessionToken)
-  //    this.setState({token: sessionToken})
-  //   console.log(this.state)
-  // }
-
-    
-  
+ 
   updateToken(newToken: string){
     localStorage.setItem('token', newToken);
     console.log(newToken)
@@ -41,18 +34,21 @@ export default class App extends React.Component<{}, State>  {
       token: ""
     })
   }
-  // componentWillMount(){
-  //   this.setToken()
-  // }
-  
+
   render(){
-    
     return (
       <div className="stars">
         <div className="twinkling">
           <div className="clouds">
             <Router>
-              <Home clearToken={this.clearToken.bind(this)} updateToken={this.updateToken.bind(this)} token={this.state.token}/>
+                <AppBar clickLogout={this.clearToken.bind(this)} updateToken={this.updateToken.bind(this)} token={this.state.token} />
+                <Dashboard clearToken={this.clearToken.bind(this)} updateToken={this.updateToken.bind(this)} token={this.state.token}/>
+              {this.state.token ? (
+                <Switch>
+                  <Route exact path="/comments"><CommentIndex token={this.state.token} /></Route>
+                  <Route exact path="/submissions"><SubmitIndex token={this.state.token} /></Route>
+                </Switch>
+              ) :  (null)}
             </Router>
           </div>
         </div>

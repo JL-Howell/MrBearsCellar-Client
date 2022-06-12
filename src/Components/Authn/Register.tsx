@@ -94,10 +94,10 @@ class SignUp extends React.Component<Props, RegisterState> {
    render() {
     return (
         <div className="container">
-            <Button onClick={this.handleOpen} id="RegisterButton" variant="outlined">SIGN UP</Button>
+            <Button onClick={this.handleOpen} id="RegisterButton" variant="outlined">Sign Up</Button>
             <Dialog open={this.state.handleopen} onClose={this.handleClose}>
             <DialogTitle id="RegisterPopup">
-                REGISTER
+                Sign Up
             </DialogTitle>
             <DialogContent id="Register">
                 <TextField
@@ -123,7 +123,7 @@ class SignUp extends React.Component<Props, RegisterState> {
                     />
             </DialogContent>
             <DialogActions id="Registerbtn">
-                <Button onClick={this.handleSubmit} id="btn">SIGN UP</Button>
+                <Button onClick={this.handleSubmit} id="btn">Register</Button>
             </DialogActions>
             </Dialog>
         </div>

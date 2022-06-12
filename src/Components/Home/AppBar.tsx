@@ -1,11 +1,23 @@
 import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import logo from '../../Assets/mrbearscellar.png';
+
+import {
+  Tooltip,
+  Toolbar,
+  AppBar,
+  ButtonGroup,
+  Grid,
+  List,
+  Divider,
+  ListItem,
+  ListItemIcon,
+  IconButton
+} from "@material-ui/core";
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
+import NoteIcon from '@material-ui/icons/Note';
+import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
+import { Link} from 'react-router-dom'
+import logo from '../../Assets/mrbearscellar.png'
 import './Home.css';
 
 import Login from '../Auth/Login';
@@ -20,16 +32,18 @@ interface Props {
 type State = {
   register: boolean;
   login: boolean;
+  left: boolean;
 }
 
-export default class TopBar extends React.Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
-        this.state = {
-          register: false,
-          login: false,
-        }
+class NavBar extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      register: false,
+      login: false,
+      left: false,
     }
+  }
 
     handleOpenReg = () => {
       this.setState({
@@ -56,34 +70,66 @@ export default class TopBar extends React.Component<Props, State> {
     }
 
     render() {
-    return (
-      <div className="container">
-          <Grid container spacing={10} style={{padding: 24}}>
-            <Grid item xs={12} sm={6} lg={4} xl={12}>
-            <img src={logo} id="logo" alt="Logo" />
-          <AppBar id="appBar" position="fixed" >
-            <Toolbar className="root">
-				<ButtonGroup>
-					{!this.props.token && (
-						<Register 
-							updateToken={this.props.updateToken}
-						/>
-					)}
-					{this.props.token ? (
-						<Button id="LogoutBtn" onClick={this.props.clickLogout}>
-							LOGOUT
-						</Button>
-					) : (
-						<Login 
-						updateToken={this.props.updateToken} />
-					)}
-				</ButtonGroup>
-            </Toolbar>
-          </AppBar>
-              <Typography id="CellarText" variant="h2" >Latest Cellar Stories</Typography>
+      return (
+        <div>
+            <Grid container spacing={10} style={{padding: 24}}>
+              <Grid item xs={12} sm={6} lg={4} xl={12}>
+            <AppBar id="appBar" position="fixed" >
+              <Toolbar className="root" >
+              <img src={logo} id="logo" alt="Logo" />
+              
+          <ButtonGroup>
+            {!this.props.token && (
+              <Register 
+              updateToken={this.props.updateToken}
+              />
+            )}
+            {this.props.token ? (
+              <>
+              <List>
+                  <ListItem button id="myLibrary">
+                  <Link to="/submissions" className="links">
+                    <Tooltip title="Library" arrow>
+                      <ListItemIcon className="drawerIcons">
+                          <LocalLibraryIcon id="ishIcons"/>
+                      </ListItemIcon>
+                    </Tooltip>
+                  </Link>
+                  </ListItem>
+              </List>
+              <Divider />
+              <Divider />
+              <List>
+                  <ListItem button id="myComments">
+                  <Link to="/comments" className="links">
+                    <Tooltip title="Comments" arrow>
+                      <ListItemIcon className="drawerIcons">
+                          <NoteIcon id="ishIcons" />
+                      </ListItemIcon>
+                      </Tooltip>
+                  </Link>
+                  </ListItem>
+              </List>
+              <Divider />
+                <Tooltip title="Logout" arrow>
+                  <IconButton id="ishBtn" aria-label="logout"> 
+                  <ExitToAppIcon  id="ishIcons" onClick={this.props.clickLogout} />
+                  </IconButton>
+                </Tooltip>
+                
+              </>
+            ) : (
+              <Login 
+              updateToken={this.props.updateToken} />
+            )}
+          </ButtonGroup>
+              </Toolbar>
+            </AppBar>
+              </Grid>
             </Grid>
-          </Grid>
-        </div>
-      );
-    }
+      </div>
+        );
+      }
 };
+
+export default (NavBar);

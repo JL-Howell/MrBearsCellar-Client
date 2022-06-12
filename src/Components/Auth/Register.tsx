@@ -8,6 +8,7 @@ import {
     DialogTitle,
 } from '@material-ui/core';
 import './auth.css';
+import APIURL from '../../helpers/environment';
 
 type Props = {
     updateToken: (newToken: string) => void,
@@ -19,6 +20,7 @@ type RegisterState = {
     password: string;
     role: boolean;
     handleopen: boolean;
+    
 }
 
 class SignUp extends React.Component<Props, RegisterState> {
@@ -38,7 +40,7 @@ class SignUp extends React.Component<Props, RegisterState> {
        if (this.state.password.length < 8) {
            alert('password must be at least 8 characters')
        } else {
-           fetch('http://localhost:4000/user/signup', {
+        fetch(`${APIURL}/user/signup`, {
                method: "POST", 
                body: JSON.stringify({
                     username: this.state.username,
@@ -52,7 +54,8 @@ class SignUp extends React.Component<Props, RegisterState> {
            .then(res => res.json())
            .then(data => {
                console.log(data);
-               this.props.updateToken(data.sessionToken);
+               console.log(data.token);
+               this.props.updateToken(data.token);
                this.handleClose();
            })
        }
@@ -91,10 +94,10 @@ class SignUp extends React.Component<Props, RegisterState> {
    render() {
     return (
         <div className="container">
-            <Button onClick={this.handleOpen} id="RegisterButton" variant="outlined">SIGN UP</Button>
+            <Button onClick={this.handleOpen} id="RegisterButton" variant="outlined">Sign Up</Button>
             <Dialog open={this.state.handleopen} onClose={this.handleClose}>
             <DialogTitle id="RegisterPopup">
-                REGISTER
+                Sign Up
             </DialogTitle>
             <DialogContent id="Register">
                 <TextField
@@ -120,7 +123,7 @@ class SignUp extends React.Component<Props, RegisterState> {
                     />
             </DialogContent>
             <DialogActions id="Registerbtn">
-                <Button onClick={this.handleSubmit} id="btn">SIGN UP</Button>
+                <Button onClick={this.handleSubmit} id="btn">Register</Button>
             </DialogActions>
             </Dialog>
         </div>

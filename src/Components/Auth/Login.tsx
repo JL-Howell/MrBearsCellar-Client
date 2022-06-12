@@ -8,6 +8,7 @@ import {
     DialogTitle,
 } from '@material-ui/core';
 import './auth.css';
+import APIURL from '../../helpers/environment';
 
 type Props = {
     updateToken: (newToken: string) => void,
@@ -31,7 +32,7 @@ export default class Login extends React.Component<Props, SigninState>{
 
     handleSubmit = (event: any) => {
         event.preventDefault();
-        fetch('http://localhost:4000/user/login', {
+        fetch(`${APIURL}/user/login`, {
             method: 'POST',
             body: JSON.stringify({ 
                 username: this.state.username,
@@ -76,9 +77,7 @@ export default class Login extends React.Component<Props, SigninState>{
     render() {
         return (
             <div>
-                <Button onClick={this.handleOpen} id="LoginButton" variant="outlined">
-                    LOGIN
-                </Button>
+                <Button onClick={this.handleOpen} id="LoginButton" variant="outlined">Login</Button>
                 <Dialog open={this.state.handleopen} onClose={this.handleClose}>
                 <DialogTitle id="dialogTitle">
                    LOGIN
@@ -102,10 +101,13 @@ export default class Login extends React.Component<Props, SigninState>{
                 />
                 </DialogContent>
                 <DialogActions id="Loginbtn">
-                    <Button onClick={this.handleSubmit} id="btn">LOGIN</Button>
+                    <Button onClick={this.handleSubmit} id="btn">Login</Button>
                 </DialogActions>
                 </Dialog>
             </div>
         )
     }
 }
+    
+
+

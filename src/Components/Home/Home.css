@@ -11,17 +11,26 @@
 }
 
 #CardTable:hover {
-    cursor: pointer;
-    box-shadow: 0 0 30px 30px rgba(243, 5, 5, 0.2);
     overflow: scroll;
+    color: black;
+    cursor: pointer;
+    transform: scale(1.08);
+    transition: transform .5s;
+    
+    /* Apply zoom animation */
+    background: #5e5c5a;
+    border: 3px solid #530a0a;
+
+    -webkit-animation: smoothCriminal 20s ease infinite;
+    -moz-animation: smoothCriminal 20s ease infinite;
+    animation: smoothCriminal 20s ease infinite;
+    font-weight: bold;
 }
 
 #logo {
+    height: 7vh;
     display:block;
     margin-right:auto;
-    margin-left:auto;
-    margin-top: 8vh;
-    width: 100vh;
 }
 
 #appBar {
@@ -52,4 +61,11 @@
     height: 50%;
 
 }
+
+#ishIcons {
+    color: whitesmoke;
+    padding: 0;
+    margin: 0;
+}
+
 

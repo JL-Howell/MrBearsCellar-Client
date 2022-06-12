@@ -1,0 +1,46 @@
+#CreateBtn {
+    display:block;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: auto;
+    font-family: 'Butcherman', cursive;
+    border-Radius: 5;
+    border: 1px solid white;
+    color: white;
+    font-size: 20px;
+}
+
+#CreateBtn:hover {
+
+    transform: scale(1.08);
+    transition: transform .3s; 
+
+    /* Apply zoom animation */
+    background: #770303;
+    border: 4px solid #01070e;
+
+    -webkit-animation: smoothCriminal 15s ease infinite;
+    -moz-animation: smoothCriminal 15s ease infinite;
+    animation: smoothCriminal 15s ease infinite;
+    font-weight: bold;
+    font-size: 36px;
+}
+
+#CreateBtn:active {
+	position: relative;
+	top: 1px;
+}
+
+#displaycontent {
+    display: flex;
+    justify-content: center;
+}
+
+#editBtn {
+    color: white;
+}
+
+#deleteBtn {
+    color: white;
+}
+

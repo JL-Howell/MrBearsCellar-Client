@@ -16,7 +16,7 @@ import {
 import './Comment.css';
 import Rating from '@material-ui/lab/Rating';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
-import APIURL from '../helpers/environment';
+import APIURL from '../../helpers/environment';
 
 interface Props {
     token: string,
