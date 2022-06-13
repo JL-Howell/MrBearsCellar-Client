@@ -5,6 +5,7 @@ import SubmitTable from './SubmitTable';
 import Grid from '@material-ui/core/Grid';
 import './Style.css';
 import APIURL from '../../helpers/environment';
+
 type Props = {
     token: string;
 }
@@ -52,12 +53,6 @@ export default class SubmitIndex extends React.Component<Props, State> {
     }
 
     editUpdateSubmits = (submission: any) => {
-        this.setState({
-            submissionUpdate: submission
-        })
-    }
-
-    editCreateSubmits = (submission: any) => {
         this.setState({
             submissionUpdate: submission
         })

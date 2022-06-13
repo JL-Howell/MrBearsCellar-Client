@@ -13,15 +13,14 @@ import {
   IconButton
 } from "@material-ui/core";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import MenuBookIcon from '@material-ui/icons/MenuBook';
 import NoteIcon from '@material-ui/icons/Note';
 import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
 import { Link} from 'react-router-dom'
 import logo from '../../Assets/mrbearscellar.png'
 import './Home.css';
 
-import Login from '../Auth/Login';
-import Register from '../Auth/Register';
+import Login from '../Authn/Login';
+import Register from '../Authn/Register';
 
 interface Props {
   token: string | null;

@@ -7,7 +7,7 @@ import {
     DialogContent,
     DialogTitle,
 } from '@material-ui/core';
-import './auth.css';
+import './authn.css';
 import APIURL from '../../helpers/environment';
 
 type Props = {

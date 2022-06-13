@@ -104,7 +104,6 @@ export default class SubmissionCreate extends React.Component<Props, State> {
     singleFileChangedHandler = (event: any) => {
         this.setState({
             file: event.target.files[0],
-           
         });
     }
 
@@ -155,10 +154,12 @@ export default class SubmissionCreate extends React.Component<Props, State> {
                                 </Grid>
                                 <Grid item xs={4}>
                                     <TextField
+                                        value={this.state.date}
                                         id="date"
                                         label="Date"
                                         type="date"
                                         fullWidth
+                                        onChange={(e) => this.setDate(e.target.value)}
                                         InputLabelProps={{
                                             shrink: true,
                                         }}>

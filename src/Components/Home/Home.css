@@ -1,17 +1,19 @@
 
+body {
+    margin: 0;
+}
 
 #CardTable {
-    height: 400px;
-    overflow: hidden;
+    height: auto;
     text-align: center;
     background-color: rgb(44, 5, 5);
     color: white;
     box-shadow: 0 0 10px 10px rgba(241, 235, 235, 0.2);
     transition: 0.10s;
+    justify-items: center;
 }
 
 #CardTable:hover {
-    overflow: scroll;
     color: black;
     cursor: pointer;
     transform: scale(1.08);
